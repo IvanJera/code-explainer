@@ -13,9 +13,9 @@ language.
 ## Usage
 
 1. Clone the repo
-2. Run `./gradlew runIde` — this launches a sandbox IntelliJ IDEA with the plugin installed
+2. Run `./gradlew runIde` - this launches a sandbox IntelliJ IDEA with the plugin installed
 3. Get a free Gemini API key from https://aistudio.google.com/app/apikey
-4. In the sandbox IDE, open **Settings → Tools → Code Explainer** and paste your key
+4. In the sandbox IDE, open **Settings -> Tools -> Code Explainer** and paste your key
 5. Select code in any file, right-click, **Explain Code**
 
 ## Tech stack
@@ -33,7 +33,7 @@ language.
 Editor selection
       │
       ▼
-ExplainCodeAction ──► LlmService ──► Google Gen AI Java SDK
+ExplainCodeAction -> LlmService -> Google Gen AI Java SDK
                           │
                           ▼
               ExplanationToolWindow (streams tokens)
@@ -41,14 +41,14 @@ ExplainCodeAction ──► LlmService ──► Google Gen AI Java SDK
 
 Four layers, each with one responsibility:
 
-- **action** — captures editor selection and language, hands off to the service
-- **service** — wraps the Gen AI SDK; called from a background thread; provider-agnostic name (`LlmService`) so swapping providers is a single-file change
-- **settings** — `PersistentStateComponent` for non-sensitive config, `PasswordSafe` for the API key
-- **ui** — tool window that displays streamed output
+- **action** - captures editor selection and language, hands off to the service
+- **service** - wraps the Gen AI SDK; called from a background thread; provider-agnostic name (`LlmService`) so swapping providers is a single-file change
+- **settings** - `PersistentStateComponent` for non-sensitive config, `PasswordSafe` for the API key
+- **ui** - tool window that displays streamed output
 
 ## Design decisions
 
-These are the choices I made and why — the parts I think matter more than the code itself.
+These are the choices I made and why - the parts I think matter more than the code itself.
 
 **Tool window over popup.** A popup dismisses on focus loss; a tool window persists
 while the user keeps working. Matches how AI Assistant itself behaves and respects
@@ -82,7 +82,7 @@ EDT. `Task.Backgroundable` puts the call on a background thread, gives the user
 a cancel button, and integrates with the IDE's status bar.
 
 **`JBFont.regular()` for the tool window.** Using the IDE's UI font means the
-plugin looks native — it scales with the user's IDE font settings and respects
+plugin looks native - it scales with the user's IDE font settings and respects
 the current theme automatically.
 
 ## What I would add next
@@ -90,9 +90,9 @@ the current theme automatically.
 This is a v0.1.0. Things I'd build if I kept going:
 
 - Markdown rendering with syntax highlighting in the tool window (currently plain text)
-- Follow-up questions in the same tool window — multi-turn conversation
+- Follow-up questions in the same tool window - multi-turn conversation
 - Project-wide context, not just the selection (related files, type definitions)
-- Light unit tests on `PromptBuilder` — its inputs and outputs are pure
+- Light unit tests on `PromptBuilder` - its inputs and outputs are pure
 - Provider selection in settings (Gemini / Claude / local Ollama)
 
 ## License
