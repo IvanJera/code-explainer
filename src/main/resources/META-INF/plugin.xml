@@ -1,0 +1,50 @@
+<idea-plugin>
+    <id>com.ijerinic.code-explainer</id>
+    <name>Code Explainer</name>
+    <vendor email="ijerinic@pm.me" url="https://github.com/IvanJera">Ivan Jerinic</vendor>
+
+    <description><![CDATA[
+        Select code in the editor and get an LLM-generated explanation streamed into a side tool window.
+        Aware of the file's programming language.
+        <br><br>
+        Configure your API key under <b>Settings → Tools → Code Explainer</b>.
+    ]]></description>
+
+    <!-- com.intellij is the core platform; required for any plugin -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Notification group used by the action when API key is missing -->
+        <notificationGroup id="CodeExplainer" displayType="BALLOON"/>
+
+        <!-- Side tool window where streamed explanations appear -->
+        <toolWindow
+                id="Code Explainer"
+                anchor="right"
+                factoryClass="com.ijerinic.explain.ui.ExplanationToolWindowFactory"/>
+
+        <!-- Settings page under Settings → Tools -->
+        <projectConfigurable
+                parentId="tools"
+                instance="com.ijerinic.explain.settings.SettingsConfigurable"
+                id="com.ijerinic.explain.settings"
+                displayName="Code Explainer"/>
+
+        <!-- Persistent (non-sensitive) settings, e.g. selected model -->
+        <projectService serviceImplementation="com.ijerinic.explain.settings.PluginSettings"/>
+
+        <!-- Service that wraps the LLM SDK -->
+        <projectService serviceImplementation="com.ijerinic.explain.service.LlmService"/>
+    </extensions>
+
+    <actions>
+        <!-- Right-click action in the editor -->
+        <action
+                id="com.ijerinic.explain.ExplainCodeAction"
+                class="com.ijerinic.explain.action.ExplainCodeAction"
+                text="Explain Code"
+                description="Send the selected code to an LLM for an explanation">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>
