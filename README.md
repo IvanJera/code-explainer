@@ -2,7 +2,6 @@
 
 A small IntelliJ IDEA plugin that explains selected code using an LLM.
 
-Built as a take-home submission for the JetBrains AI Assistant internship application.
 
 ## What it does
 
