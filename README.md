@@ -2,7 +2,6 @@
 
 A small IntelliJ IDEA plugin that explains selected code using an LLM.
 
-
 ## What it does
 
 Select code in the editor, right-click, choose **Explain Code**. A tool window
